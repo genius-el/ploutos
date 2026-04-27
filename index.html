@@ -17,11 +17,13 @@
                 </section>
                 
                 <section class="header-right">
-                    <div class="user-profile">
+                    <div class="user-profile" id="userProfile">
                         <img src="./images/user-image.jpg" alt="User Avatar" width="20px" height="20px">
-                        <p>Maverick</p>
                     </div>
-                    <button class="logOut-Btn">Logout</button>
+                    <div class="profile-dropdown hidden" id="profileDropdown">
+                        <p class="user-name">Maverick</p>
+                        <button class="logOut-Btn">Logout</button>
+                    </div>
                 </section>
             </div>
             
@@ -38,11 +40,11 @@
                 </div>
                 <div class="expenses-card">
                     <p>Expenses</p>
-                    <h2>$1,200.00</h2>
+                    <h2>$200.00</h2>
                 </div>
                 <div class="budget-card">
                     <p>Budget</p>
-                    <h2>$1,300.56</h2>
+                    <h2>$700.56</h2>
                 </div>
             </section>
 
@@ -65,7 +67,7 @@
                         <tr>
                             <td>2026-04-20</td>
                             <td>Salary</td>
-                            <td>$1,500.00</td>
+                            <td>$1,554.56</td>
                             <td>Earning</td>
                         </tr>
                         <tr>
@@ -85,19 +87,80 @@
             </section>
 
             <section class="action-buttons">
-                <button>Add Earning</button>
-                <button>Add Expense</button>
-                <button>Set Budget</button>
+                <button id="addEarningBtn">Add Earning</button>
+                <button id="addExpenseBtn">Add Expense</button>
+                <button id="setBudgetBtn">Set Budget</button>
             </section>
            
         </main>
         <nav class="nav-bar">
             <ul>
-                <li><a href="#"><i class="fa-solid fa-house"></i></a></li>
-                <li><a href="#"><i class="fa-solid fa-magnifying-glass"></i></a></li>
-                <li><a href="#"><i class="fa-solid fa-chart-area"></i></a></li>
-                <li><a href="#"><i class="fa-solid fa-gear"></i></a></li>
+                <li><a href="./index.html"><i class="fa-solid fa-house"></i></a></li>
+                <li><a href="./pages/search.html"><i class="fa-solid fa-magnifying-glass"></i></a></li>
+                <li><a href="./pages/analytics.html"><i class="fa-solid fa-chart-area"></i></a></li>
+                <li><a href="./pages/settings.html"><i class="fa-solid fa-gear"></i></a></li>
             </ul>
         </nav>
+
+        <!-- Overlay -->
+         <div class="overlay hidden"></div>
+
+        <!-- Add Earnings Modal -->
+         <div class="modal hidden" id="addEarningModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Add Earning</h2>
+                    <span class="close-btn">&times;</span>
+                </div>
+                
+                <div class="modal-form">
+                    <label for="earning-desctiption">Description:</label>
+                    <input type="text" id="earning-description">
+                    <label for="earning-amount">Amount:</label>
+                    <input type="number" id="earning-amount">
+                    <label for="earning-date">Date:</label>
+                    <input type="date" id="earning-date">
+                    <button type="button">Add Earning</button>
+                </div>
+            </div>
+         </div>
+
+         <!-- Add Expenses Modal -->
+         <div class="modal hidden" id="addExpenseModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Add Expense</h2>
+                    <span class="close-btn">&times;</span>
+                </div>
+                <div class="modal-form">
+                    <label for="expense-description">Description:</label>
+                    <input type="text" id="expense-description">
+                    <label for="expense-amount">Amount:</label>
+                    <input type="number" id="expense-amount">
+                    <label for="expense-date">Date:</label>
+                    <input type="date" id="expense-date">
+                    <button type="button">Add Expense</button>
+                </div>
+            </div>
+         </div>
+
+         <!-- Set Budget Modal -->
+          <div class="modal hidden" id="setBudgetModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Set Budget</h2>
+                    <span class="close-btn">&times;</span>
+                </div>
+                <div class="modal-form">
+                    <label for="budget-amount">Amount:</label>
+                    <input type="number" id="budget-amount">
+                    <label for="budget-date">Date:</label>
+                    <input type="date" id="budget-date">
+                    <button type="button">Set Budget</button>
+                </div>
+            </div>
+         </div>
+
+        <script src="./app.js"></script>
     </body>
 </html>
