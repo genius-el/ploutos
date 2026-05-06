@@ -4,6 +4,11 @@
 
 let body = document.body;
 
+// Card Summary Values
+let currentEarningValue = document.getElementById('currentEarningValue');
+let currentExpenseValue = document.getElementById('currentExpenseValue');
+let currentBudgetValue = document.getElementById('currentBudgetValue');
+
 // Profile Dropdown
 let userProfile = document.getElementById('userProfile');
 let profileDropdown = document.getElementById('profileDropdown')
@@ -13,6 +18,20 @@ let addEarningModal = document.getElementById('addEarningModal');
 let addExpenseModal = document.getElementById('addExpenseModal');
 let setBudgetModal = document.getElementById('setBudgetModal');
 
+// Add Earning Modal
+let earningDate = document.getElementById('earning-date');
+let earningDescription = document.getElementById('earning-description');
+let earningAmount = document.getElementById('earning-amount');
+
+// Add Expense Modal
+let expenseDate = document.getElementById('expense-date');
+let expenseDescription = document.getElementById('expense-description');
+let expenseAmount = document.getElementById('expense-amount');
+
+// Set Budget Modal
+let budgetDate = document.getElementById('budget-date');
+let budgetAmount = document.getElementById('budget-amount');
+
 // overlay
 let overlay = document.querySelector('.overlay');
 
@@ -21,6 +40,15 @@ let addEarningBtn = document.getElementById('addEarningBtn');
 let addExpenseBtn = document.getElementById('addExpenseBtn');
 let setBudgetBtn = document.getElementById('setBudgetBtn');
 let closeButtons = document.querySelectorAll('.close-btn');
+
+let submitEarningBtn = document.getElementById('submitEarningBtn');
+let submitExpenseBtn = document.getElementById('submitExpenseBtn');
+let submitBudgetBtn = document.getElementById('submitBudgetBtn');
+
+// State Values
+let earningValue = 0;
+let expenseValue = 0;
+let budgetValue = 0;
 
 // Event Listeners
 // Opening Modals
@@ -69,3 +97,80 @@ body.addEventListener('click', function (event) {
         profileDropdown.classList.add('hidden');
     }
 })
+
+// Modals functionality
+let earningTransactions = [];
+
+let earningTransaction = {
+    id: Date.now(),
+    date: "",
+    description: "",
+    amount: "",
+    type: "",
+}
+
+let expenseTransactions = [];
+
+let expenseTransaction = {
+    id: "",
+    date: "",
+    description: "",
+    amount: "",
+    type: "",
+}
+
+let budgetTransaction = {
+    id: "",
+    date: "",
+    amount: "",
+}
+
+
+
+
+submitEarningBtn.addEventListener('click', function () {
+    // Fetching inputs from Add Earning
+    let actualEarningDate = earningDate.value;
+    let actualEarningDescription = earningDescription.value;
+    let actualEarningAmount = earningAmount.value;
+    earningTransaction = {
+        id: Date.now(),
+        date: actualEarningDate,
+        description: actualEarningDescription,
+        amount: actualEarningAmount,  
+        type: 'Earning'        
+    }
+
+    earningValue += Math.round((actualEarningAmount + Number.EPSILON) * 100) / 100;
+})
+
+submitExpenseBtn.addEventListener('click', function () {
+    // Fetching inputs from Add Expense
+    let actualExpenseDate = expenseDate.value;
+    let actualExpenseDescription = expenseDescription.value;
+    let actualExpenseAmount = expenseAmount.value;
+    expenseTransaction = {
+        id: Date.now(),
+        date: actualExpenseDate,
+        description: actualExpenseDescription,
+        amount: actualExpenseAmount,  
+        type: 'Expense'     
+    }
+
+    expenseValue += Math.round((actualExpenseAmount + Number.EPSILON) * 100) / 100;
+})
+
+submitBudgetBtn.addEventListener('click', function () {
+    // Fetching inputs from Set Budget
+    let actualBudgetDate = budgetDate.value;
+    let actualBudgetAmount = budgetAmount.value;
+    budgetTransaction = {
+        id: Date.now(),
+        date: actualBudgetDate,
+        amount: actualBudgetAmount,
+    }
+    currentBudgetValue.textContent = Math.round((actualBudgetAmount + Number.EPSILON) * 100) / 100;
+})
+
+
+

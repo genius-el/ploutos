@@ -36,15 +36,15 @@
             <section class="overview-cards">
                  <div class="earnings-card">
                     <p>Earnings</p>
-                    <h2>$1,554.56</h2>
+                    <h2 id="currentEarningValue">$1,554.56</h2>
                 </div>
                 <div class="expenses-card">
                     <p>Expenses</p>
-                    <h2>$200.00</h2>
+                    <h2 id="currentExpenseValue">$200.00</h2>
                 </div>
                 <div class="budget-card">
                     <p>Budget</p>
-                    <h2>$700.56</h2>
+                    <h2 id="currentBudgetValue">$700.56</h2>
                 </div>
             </section>
 
@@ -74,12 +74,6 @@
                             <td>2026-04-21</td>
                             <td>Groceries</td>
                             <td>$150.00</td>
-                            <td>Expense</td>
-                        </tr>
-                        <tr>
-                            <td>2026-04-22</td>
-                            <td>Electricity Bill</td>
-                            <td>$50.00</td>
                             <td>Expense</td>
                         </tr>
                     </tbody>
@@ -120,7 +114,7 @@
                     <input type="number" id="earning-amount">
                     <label for="earning-date">Date:</label>
                     <input type="date" id="earning-date">
-                    <button type="button">Add Earning</button>
+                    <button type="button" id="submitEarningBtn">Submit Earning</button>
                 </div>
             </div>
          </div>
@@ -139,7 +133,7 @@
                     <input type="number" id="expense-amount">
                     <label for="expense-date">Date:</label>
                     <input type="date" id="expense-date">
-                    <button type="button">Add Expense</button>
+                    <button type="button" id="submitExpenseBtn">Submit Expense</button>
                 </div>
             </div>
          </div>
@@ -156,7 +150,7 @@
                     <input type="number" id="budget-amount">
                     <label for="budget-date">Date:</label>
                     <input type="date" id="budget-date">
-                    <button type="button">Set Budget</button>
+                    <button type="button" id="submitBudgetBtn">Submit Budget</button>
                 </div>
             </div>
          </div>
