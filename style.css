@@ -141,6 +141,8 @@ header {
     background-color: rgb(20, 20, 20);
     border-radius: 10px;
     padding: 5px;
+    max-height: 150px;
+    overflow-y: auto;
 }
 
 .transactions-section h2 {
@@ -176,6 +178,18 @@ tr {
     /* border-bottom: 1px solid var(--text-color); */
     margin-bottom: 5px;
     font-size: 10px;
+}
+
+/* The Delete Button on each row */
+.delete-transaction-btn {
+    background-color: rgb(243, 7, 7);
+    border: none;
+    border-radius: 5px;  
+    color: var(--text-color);
+    margin: 5px 2px 2px 16px;
+    padding: 2px 5px;
+    font-size: 10px;
+    cursor: pointer;
 }
 
 .action-buttons {

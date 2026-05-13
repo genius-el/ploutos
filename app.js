@@ -102,19 +102,9 @@ body.addEventListener('click', function (event) {
 })
 
 // Modals functionality
-let earningTransactions = [];
+let allTransactions = [];
 
-let earningTransaction = {
-    id: Date.now(),
-    date: "",
-    description: "",
-    amount: "",
-    type: "",
-}
-
-let expenseTransactions = [];
-
-let expenseTransaction = {
+let transaction = {
     id: "",
     date: "",
     description: "",
@@ -123,21 +113,20 @@ let expenseTransaction = {
 }
 
 let budgetTransactions = [];
+
 let budgetTransaction = {
     id: "",
     date: "",
     amount: "",
 }
 
-
-
-
+// DATA BUILDING BEGINS OR CONTINUES: Adding transactions to the transactions array and local storage
 submitEarningBtn.addEventListener('click', function () {
-    // Fetching inputs from Add Earning
+    // Receiving inputs from Add Earning
     let actualEarningDate = earningDate.value;
     let actualEarningDescription = earningDescription.value;
     let actualEarningAmount = earningAmount.value;
-    earningTransaction = {
+    transaction = {
         id: Date.now(),
         date: actualEarningDate,
         description: actualEarningDescription,
@@ -145,51 +134,25 @@ submitEarningBtn.addEventListener('click', function () {
         type: 'Earning'        
     }
 
-    // Complicated method to round to 2 decimal places without floating point issues, but it works!
-    // totalEarningValue += Math.round((Number(earningTransaction.amount) + Number.EPSILON) * 100) / 100;
-    totalEarningValue += parseFloat(earningTransaction.amount);
-    // Displaying the current earning value on the card summary
-    currentEarningValue.textContent = `$${totalEarningValue.toFixed(2)}`;
-    
     // Populating the earning transactions array
-    earningTransactions.push(earningTransaction);
+    allTransactions.push(transaction);
 
-    // DYNAMICALLY CREATING AND ADDING EARNING TRANSACTION ROWS TO THE TRANSACTIONS TABLE
-    // Create the row element
-    const newEarningRow = document.createElement('tr');
+    // Saving the earning transactions array to local storage
+    saveToStorage();
 
-    // Create the date cell
-    const earningDateCell = document.createElement('td');
-    earningDateCell.textContent = earningTransaction.date;
+    // Aggregating the total earning value for each transaction and updating the state variable
+    totalEarningValue += parseFloat(transaction.amount);
+           
+    // VISUAL UI DISPLAY: Displaying current total earning value
+    currentEarningValue.textContent = `$${totalEarningValue.toFixed(2)}`;
 
-    // Create the amount cell
-    const earningAmountCell = document.createElement('td');
-    earningAmountCell.textContent = `$${earningTransaction.amount}`;
-
-    // Create the description cell
-    const earningDescriptionCell = document.createElement('td');
-    earningDescriptionCell.textContent = earningTransaction.description;
-
-    // Create type cell
-    const earningTypeCell = document.createElement('td');
-    earningTypeCell.textContent = earningTransaction.type;
-
-    // Append each earning cell to the earning row
-    newEarningRow.appendChild(earningDateCell);
-    newEarningRow.appendChild(earningDescriptionCell);
-    newEarningRow.appendChild(earningAmountCell);
-    newEarningRow.appendChild(earningTypeCell);
-
-    // Append the completed earning row to the table body
-    tableBody.appendChild(newEarningRow);
-
+    // VISUAL UI DISPLAY: Dynamically creating transaction rows from earning transaction
+    createTransactionRow(transaction);
 
     // Clearing all entries
     earningDate.value = "";
     earningAmount.value = "";
     earningDescription.value = "";
-
-    
 
     closeAllModals();
 })
@@ -199,7 +162,7 @@ submitExpenseBtn.addEventListener('click', function () {
     let actualExpenseDate = expenseDate.value;
     let actualExpenseDescription = expenseDescription.value;
     let actualExpenseAmount = expenseAmount.value;
-    expenseTransaction = {
+    transaction = {
         id: Date.now(),
         date: actualExpenseDate,
         description: actualExpenseDescription,
@@ -207,75 +170,195 @@ submitExpenseBtn.addEventListener('click', function () {
         type: 'Expense'     
     }
 
-    // Complicated method to round to 2 decimal places without floating point issues, but it works!
-    // totalExpenseValue += Math.round((Number(expenseTransaction.amount) + Number.EPSILON) * 100) / 100;
-    totalExpenseValue += parseFloat(expenseTransaction.amount);
+    // Populating the expense transactions array
+    allTransactions.push(transaction);
+
+    // Setting the expense transactions array in local storage
+    saveToStorage();
+
+    // Recalculating the total expense value for each transaction and updating the state variable
+    totalExpenseValue += parseFloat(transaction.amount);
+
+    // VISUAL UI DISPLAY: Displaying current total expense value
     // Displaying the current expense value on the card summary
     currentExpenseValue.textContent = `$${totalExpenseValue.toFixed(2)}`;
-    // Populating the expense transactions array
-    expenseTransactions.push(expenseTransaction);
 
-    // DYNAMICALLY CREATING AND ADDING EARNING TRANSACTION ROWS TO THE TRANSACTIONS TABLE
-    // Create the row element
-    const newExpenseRow = document.createElement('tr');
+    // VISUAL UI DISPLAY: Dynamically creating transaction rows from expense transaction
+    createTransactionRow(transaction);
 
-    // Create the date cell
-    const expenseDateCell = document.createElement('td');
-    expenseDateCell.textContent = expenseTransaction.date;
-
-    // Create the amount cell
-    const expenseAmountCell = document.createElement('td');
-    expenseAmountCell.textContent = `$${expenseTransaction.amount}`;
-
-    // Create the description cell
-    const expenseDescriptionCell = document.createElement('td');
-    expenseDescriptionCell.textContent = expenseTransaction.description;
-
-    // Create type cell
-    const expenseTypeCell = document.createElement('td');
-    expenseTypeCell.textContent = expenseTransaction.type;
-
-    // Append each expense cell to the expense row
-    newExpenseRow.appendChild(expenseDateCell);
-    newExpenseRow.appendChild(expenseDescriptionCell);
-    newExpenseRow.appendChild(expenseAmountCell);
-    newExpenseRow.appendChild(expenseTypeCell);
-
-    // Append the completed expense row to the table body
-    tableBody.appendChild(newExpenseRow);
-
-
-
+    // Clearing all entries
     expenseDate.value = "";
     expenseAmount.value = "";
     expenseDescription.value = "";
 
-    // Dynamically creating transaction rows from expense transaction
     closeAllModals();
 })
 
 submitBudgetBtn.addEventListener('click', function () {
-    // Fetching inputs from Set Budget
+    // Receiving inputs from Set Budget
     let actualBudgetDate = budgetDate.value;
     let actualBudgetAmount = budgetAmount.value;
+
     budgetTransaction = {
         id: Date.now(),
         date: actualBudgetDate,
         amount: actualBudgetAmount,
     }
-    // Displaying the current budget value on the card summary
-    // Complicated method to round to 2 decimal places without floating point issues, but it works!
-    // currentBudgetValue.textContent = `$${Math.round(((Number(budgetTransaction.amount)) + Number.EPSILON) * 100) / 100}`;
-    fixedBudgetValue = parseFloat(budgetTransaction.amount);
-    currentBudgetValue.textContent = `$${fixedBudgetValue.toFixed(2)}`;
 
     budgetTransactions.push(budgetTransaction);
 
+    // Displaying the current budget value on the card summary
+    fixedBudgetValue = parseFloat(budgetTransaction.amount);
+
+    // Setting the budget value in local storage
+    localStorage.setItem('budget', fixedBudgetValue);
+
+    currentBudgetValue.textContent = `$${fixedBudgetValue.toFixed(2)}`;
+
+    // Clearing all entries
     budgetDate.value = "";
     budgetAmount.value = "";
 
     closeAllModals();
 })
 
+function saveToStorage () {
+    let allTransactionsArrayString = JSON.stringify(allTransactions);
+    localStorage.setItem('allTransactions', allTransactionsArrayString);
+}
+
+// ON PAGE LOAD, CHECK IF THERE ARE ANY TRANSACTIONS OR BUDGET IN LOCAL STORAGE AND DISPLAY THEM
+function loadTransactionsFromStorage () {
+    // Check if transaction exists in storage
+    let storedTransactions = localStorage.getItem('allTransactions');
+    if (storedTransactions) {
+        let parsedTransactions = JSON.parse(storedTransactions);
+        // Where memory (earning transactions array) becomes in tune with local storage
+        allTransactions = parsedTransactions;
+
+        allTransactions.forEach((transaction) => {
+            // DYNAMICALLY CREATING AND ADDING EARNING TRANSACTION ROWS TO THE TRANSACTIONS TABLE
+            createTransactionRow(transaction);
+        });
+
+        // Getting the earnings and expenses arrays
+        calculatingCurrentTransactionTotals();
+
+        // Displaying current earning value on card summary
+        currentEarningValue.textContent = `$${totalEarningValue.toFixed(2)}`;
+
+        // Displaying current expense value on card summary
+        currentExpenseValue.textContent = `$${totalExpenseValue.toFixed(2)}`;
+    }
+}
+
+// For budget from local storage
+function loadBudgetFromStorage () {
+    let storedBudgetTransaction = localStorage.getItem('budget');
+    if (storedBudgetTransaction) {
+        let budgetToUse = parseFloat(storedBudgetTransaction);
+        currentBudgetValue.textContent = `$${budgetToUse.toFixed(2)}`;
+    }
+}
+
+loadTransactionsFromStorage();
+loadBudgetFromStorage();
+
+function calculatingCurrentTransactionTotals () {
+    // Getting the earnings and expenses arrays
+    let earnings = allTransactions.filter(transaction => transaction.type === 'Earning');
+    let expenses = allTransactions.filter(transaction => transaction.type === 'Expense');
+
+    // Calculating total earnings amount
+    totalEarningValue = earnings.reduce(function(total, transaction) {
+        return total + parseFloat(transaction.amount);
+    }, 0);
+
+    // Calculating total expenses amount
+    totalExpenseValue = expenses.reduce(function(total, transaction) {
+        return total + parseFloat(transaction.amount)
+    }, 0)
+}
 
 
+function createTransactionRow (transaction) {
+     // DYNAMICALLY CREATING AND ADDING EARNING TRANSACTION ROWS TO THE TRANSACTIONS TABLE
+        // Create the row element
+        const newRow = document.createElement('tr');
+
+        // Create the date cell
+        const dateCell = document.createElement('td');
+        dateCell.textContent = transaction.date;
+
+        // Create the amount cell
+        const amountCell = document.createElement('td');
+        amountCell.textContent = `$${transaction.amount}`;
+
+        // Create the description cell
+        const descriptionCell = document.createElement('td');
+        descriptionCell.textContent = transaction.description;
+
+        // Create type cell
+        const typeCell = document.createElement('td');
+        typeCell.textContent = transaction.type;
+
+        // Create the delete button cell
+        const deleteBtn = document.createElement('button');
+        deleteBtn.dataset.id = transaction.id;
+        deleteBtn.className = 'delete-transaction-btn';
+
+        // creating the trash icon for font Awesome library
+        const trashIcon = document.createElement('i');
+
+        trashIcon.classList.add('fas', 'fa-trash');
+
+        // (Optional) Improve accessiblity for decorative icons
+        trashIcon.setAttribute('aria-hidden', 'true');
+
+        deleteBtn.appendChild(trashIcon);
+
+
+        // Append each cell and then the delete btn to the row
+        newRow.appendChild(dateCell);
+        newRow.appendChild(descriptionCell);
+        newRow.appendChild(amountCell);
+        newRow.appendChild(typeCell);
+        newRow.appendChild(deleteBtn);
+
+        // Append the completed row to the table body
+        tableBody.appendChild(newRow);
+}
+
+// DELETE transaction functionality
+tableBody.addEventListener('click', function (event) {
+    if (event.target.closest('.delete-transaction-btn')) {
+        const transactionIdToDelete = Number(event.target.closest('.delete-transaction-btn').dataset.id);
+        // Filter allTransactions to remove the deleted ID
+        let updatedTransactions = allTransactions.filter(transaction => transaction.id !== transactionIdToDelete);
+        allTransactions = updatedTransactions;
+
+        // Save to storage
+        saveToStorage();
+
+        // Recalculating totals
+        calculatingCurrentTransactionTotals();
+
+        // Update the card summary with the new totals
+        currentEarningValue.textContent = `$${totalEarningValue.toFixed(2)}`;
+        
+        currentExpenseValue.textContent = `$${totalExpenseValue.toFixed(2)}`;
+        // Re-rendering the transactions table
+        renderTransactionsTable();
+    }
+})
+
+// Render existing transactions after deletions
+function renderTransactionsTable () {
+    // Clear the table body before re-rendering to avoid duplicates
+    tableBody.innerHTML = "";
+
+    // Re-render all transactions
+    allTransactions.forEach(transaction => {
+        createTransactionRow(transaction)
+    })
+}
