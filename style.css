@@ -17,6 +17,7 @@
 body {
     position: relative;
     /* border: 1px solid var(--secondary-color); */
+    display: none;
     box-shadow: 0 0 10px var(--secondary-color);
     border-radius: 5px;
     max-width: 500px;
@@ -134,6 +135,11 @@ header {
     opacity: 0.8;
 }
 
+/* The Budget Warning Feature Class */
+.budget-warning {
+    background-color: rgb(243, 7, 7);
+}
+
 .transactions-section {
     color: var(--text-color);
     margin-top: var(--gap);
@@ -241,6 +247,7 @@ tr {
     color: var(--text-color);
     font-weight: 500;
 }
+
 
 /* Search Page Styling */
 .search-field {

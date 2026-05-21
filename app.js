@@ -1,8 +1,26 @@
 "use strict";
 
+// CONDITION FOR DISPLAYING THE GET STARTED PAGE
+let nameInStorage = localStorage.getItem('profileName');
+
+if (!nameInStorage) {
+    // Redirects the user to the get stsrted page only if user name does not exist. Else, the user remains on the dashboard page.
+    window.location.href = "getStarted.html";
+} else {
+    // If user name exists, the dashboard page is displayed and the user can interact with the dashboard.
+    document.body.style.display = "block";
+}
+
 // Selecting DOM Elements
 
 let body = document.body;
+// Card References
+let earningsCard = document.getElementById('earningsCard');
+let expensesCard = document.getElementById('expensesCard');
+let budgetCard = document.getElementById('budgetCard');
+
+// Welcome Message Reference
+let welcomeMessage = document.getElementById('welcomeMessage');
 
 // Card Summary Values
 let currentEarningValue = document.getElementById('currentEarningValue');
@@ -11,7 +29,8 @@ let currentBudgetValue = document.getElementById('currentBudgetValue');
 
 // Profile Dropdown
 let userProfile = document.getElementById('userProfile');
-let profileDropdown = document.getElementById('profileDropdown')
+let profileDropdown = document.getElementById('profileDropdown');
+let chosenUserName = document.getElementById('chosenUserName');
 
 // Modals
 let addEarningModal = document.getElementById('addEarningModal');
@@ -51,7 +70,13 @@ let submitBudgetBtn = document.getElementById('submitBudgetBtn');
 // State Values
 let totalEarningValue = 0;
 let totalExpenseValue = 0;
-let fixedBudgetValue = 0;
+let recentBudgetAmount = 0;
+
+// Personalized Welcome Message
+welcomeMessage.textContent = `Welcome back, ${nameInStorage}!`;
+
+// Profile Name Update
+chosenUserName.textContent = nameInStorage;
 
 // Event Listeners
 // Opening Modals
@@ -176,7 +201,7 @@ submitExpenseBtn.addEventListener('click', function () {
     // Setting the expense transactions array in local storage
     saveToStorage();
 
-    // Recalculating the total expense value for each transaction and updating the state variable
+    // Updating the total expense value state variable
     totalExpenseValue += parseFloat(transaction.amount);
 
     // VISUAL UI DISPLAY: Displaying current total expense value
@@ -185,6 +210,9 @@ submitExpenseBtn.addEventListener('click', function () {
 
     // VISUAL UI DISPLAY: Dynamically creating transaction rows from expense transaction
     createTransactionRow(transaction);
+
+    // Trigger check for budget warning system on expense submission
+    checkBudgetWarning();
 
     // Clearing all entries
     expenseDate.value = "";
@@ -207,13 +235,14 @@ submitBudgetBtn.addEventListener('click', function () {
 
     budgetTransactions.push(budgetTransaction);
 
-    // Displaying the current budget value on the card summary
-    fixedBudgetValue = parseFloat(budgetTransaction.amount);
+    // Accessing the current budget value and displaying it on the card summary
+    let recentBudget = budgetTransactions[budgetTransactions.length -  1];
+    recentBudgetAmount = parseFloat(recentBudget.amount);
 
     // Setting the budget value in local storage
-    localStorage.setItem('budget', fixedBudgetValue);
+    localStorage.setItem('budget', recentBudgetAmount);
 
-    currentBudgetValue.textContent = `$${fixedBudgetValue.toFixed(2)}`;
+    currentBudgetValue.textContent = `$${recentBudgetAmount.toFixed(2)}`;
 
     // Clearing all entries
     budgetDate.value = "";
@@ -249,6 +278,9 @@ function loadTransactionsFromStorage () {
 
         // Displaying current expense value on card summary
         currentExpenseValue.textContent = `$${totalExpenseValue.toFixed(2)}`;
+
+        // Trigger check for budget warning system on page load
+        checkBudgetWarning();
     }
 }
 
@@ -257,6 +289,9 @@ function loadBudgetFromStorage () {
     let storedBudgetTransaction = localStorage.getItem('budget');
     if (storedBudgetTransaction) {
         let budgetToUse = parseFloat(storedBudgetTransaction);
+        // Where memory budget transaction becomes in tune with local storage
+        recentBudgetAmount = budgetToUse;
+
         currentBudgetValue.textContent = `$${budgetToUse.toFixed(2)}`;
     }
 }
@@ -280,6 +315,15 @@ function calculatingCurrentTransactionTotals () {
     }, 0)
 }
 
+// Budget Warning System 
+function checkBudgetWarning () {
+    let budgetExpenseDiff = recentBudgetAmount - totalExpenseValue;
+    if (budgetExpenseDiff <= 100 && recentBudgetAmount > 0) {
+        expensesCard.classList.add('budget-warning');
+    } else {
+        expensesCard.classList.remove('budget-warning');
+    }
+}
 
 function createTransactionRow (transaction) {
      // DYNAMICALLY CREATING AND ADDING EARNING TRANSACTION ROWS TO THE TRANSACTIONS TABLE
@@ -349,6 +393,9 @@ tableBody.addEventListener('click', function (event) {
         currentExpenseValue.textContent = `$${totalExpenseValue.toFixed(2)}`;
         // Re-rendering the transactions table
         renderTransactionsTable();
+
+        // Trigger check for budget warning system after deletion
+        checkBudgetWarning();
     }
 })
 

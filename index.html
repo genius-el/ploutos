@@ -21,28 +21,28 @@
                         <img src="./images/user-image.jpg" alt="User Avatar" width="20px" height="20px">
                     </div>
                     <div class="profile-dropdown hidden" id="profileDropdown">
-                        <p class="user-name">Maverick</p>
+                        <p class="user-name" id="chosenUserName">Maverick</p>
                         <button class="logOut-Btn">Logout</button>
                     </div>
                 </section>
             </div>
             
             <div class="welcome-section">
-                <p class="welcome">Welcome back, Maverick!</p>
+                <p class="welcome" id="welcomeMessage"></p>
             </div>
             
         </header>
         <main>
             <section class="overview-cards">
-                 <div class="earnings-card">
+                 <div class="earnings-card" id="earningsCard">
                     <p>Earnings</p>
                     <h2 id="currentEarningValue">$0.00</h2>
                 </div>
-                <div class="expenses-card">
+                <div class="expenses-card" id="expensesCard">
                     <p>Expenses</p>
                     <h2 id="currentExpenseValue">$0.00</h2>
                 </div>
-                <div class="budget-card">
+                <div class="budget-card" id="budgetCard">
                     <p>Budget</p>
                     <h2 id="currentBudgetValue">$0.00</h2>
                 </div>
