@@ -25,6 +25,6 @@ getStartedBtn.addEventListener('click', () => {
         localStorage.setItem('profileName', profileName);
         alert(`Welcome, ${profileName}! Your username has been saved.`);
         // Redirecting to dashboard page after storing the username in localStorage
-        window.location.href = 'index.html';
+        window.location.href = '../index.html';
     }
 })

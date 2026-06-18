@@ -5,8 +5,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Ploutos | Analytics</title>
-        <link rel=stylesheet href="../style.css">
+        <link rel=stylesheet href="../styles/style.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+        <script>
+            if (localStorage.getItem('appearanceMode') === 'light') {
+                document.documentElement.classList.add('light-mode');
+            }
+        </script>
     </head>
     <body>
         <header>
@@ -18,7 +23,7 @@
                 
                 <section class="header-right">
                     <div class="user-profile">
-                        <img src="../images/user-image.jpg" alt="User Avatar" width="20px" height="20px">
+                        <img src="../images/user-image.png" alt="User Avatar" width="20px" height="20px">
                     </div>
                     <div class="profile-dropdown hidden">
                         <p class="user-name">Maverick</p>
@@ -37,25 +42,32 @@
                 <div class="earnings-bar-outline">
                     <div class="earnings-bar-fill"></div>
                 </div>
-                <p class="earnings-amount">$1,554</p>
-                <p class="earnings-percentage">75%</p>
-                <h3 class="earnings-bar-title">Earnings</h3>
+                <div class="labels">
+                    <p class="earnings-amount">$1,554</p>
+                    <p class="earnings-percentage">75%</p>
+                    <h3 class="earnings-bar-title">Earnings</h3>
+                </div>
             </div>
             <div class="expenses-bar">
                 <div class="expenses-bar-outline">
                     <div class="expenses-bar-fill"></div>
                 </div>
-                <p class="expenses-amount">$1,200</p>
-                <p class="expenses-percentage">60%</p>
-                <h3 class="expenses-bar-title">Expenses</h3>
+                <div class="labels">
+                    <p class="expenses-amount">$1,200</p>
+                    <p class="expenses-percentage">60%</p>
+                    <h3 class="expenses-bar-title">Expenses</h3>
+                </div>
             </div>
             <div class="budget-bar">
                 <div class="budget-bar-outline">
                     <div class="budget-bar-fill"></div>
                 </div>
-                <p class="budget-amount">$2,000</p>
-                <p class="budget-percentage">90%</p>
-                <h3 class="budget-bar-title">Budget</h3>
+                <div class="labels">
+                    <p class="budget-amount">$2,000</p>
+                    <p class="budget-percentage">90%</p>
+                    <h3 class="budget-bar-title">Budget</h3>
+                </div>
+                
             </div>
         </main>
 
@@ -67,5 +79,7 @@
                 <li><a href="../pages/settings.html"><i class="fa-solid fa-gear"></i></a></li>
             </ul>
         </nav>
+
+        <script src="../scripts/analytics.js"></script>
     </body>
 </html>

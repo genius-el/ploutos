@@ -5,8 +5,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Ploutos | Settings</title>
-        <link rel=stylesheet href="../style.css">
+        <link rel=stylesheet href="../styles/style.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+        <script>
+            if (localStorage.getItem('appearanceMode') === 'light') {
+                document.documentElement.classList.add('light-mode');
+            }
+        </script>
     </head>
     <body>
         <header>
@@ -18,7 +23,7 @@
                 
                 <section class="header-right">
                     <div class="user-profile">
-                        <img src="../images/user-image.jpg" alt="User Avatar" width="20px" height="20px">
+                        <img src="../images/user-image.png" alt="User Avatar" width="20px" height="20px">
                     </div>
                     <div class="profile-dropdown hidden">
                         <p class="user-name">Maverick</p>
@@ -34,8 +39,8 @@
 
         <main class="settings-main">
             <div class="checkbox-section">
-                <input type="checkbox" id="darkModeToggle">
-                <label for="darkModeToggle">Dark Mode</label>
+                <input type="checkbox" id="lightModeToggle">
+                <label for="lightModeToggle">Light Mode</label>
             </div>
             <input type="text" placeholder="New Username">
             <select class="currency-select">
@@ -56,5 +61,6 @@
                 <li><a href="../pages/settings.html"><i class="fa-solid fa-gear"></i></a></li>
             </ul>
         </nav>
+        <script src="../scripts/settings.js"></script>
     </body>
 </html>

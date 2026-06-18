@@ -6,11 +6,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Ploutos | Get Started</title>
-        <link rel="stylesheet" href="getStarted.css">
+        <link rel="stylesheet" href="../styles/getStarted.css">
+        <script>
+            if (localStorage.getItem('appearanceMode') === 'light') {
+                document.documentElement.classList.add('light-mode');
+            }
+        </script>
     </head>
     <body>
-        <main class="signin-page-main">
-            <section class="signin-introduction">
+        <main class="getStarted-page-main">
+            <section class="getStarted-introduction">
                 <h2>Welcome to Ploutos</h2>
                 <p>Africa's No. 1 Finance and Budget Tracker</p>
                 <p>Track your earnings and expenses, manage your budget, and achieve your financial goals with ease.</p>
@@ -28,6 +33,6 @@
             <p>&copy; 2026 Ploutos. All rights reserved.</p>
         </footer>
 
-        <script src="./getStarted.js"></script>
+        <script src="../scripts/getStarted.js"></script>
     </body>
 </html>

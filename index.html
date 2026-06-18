@@ -5,10 +5,15 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Ploutos | Home</title>
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="./styles/style.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+        <script>
+            if (localStorage.getItem('appearanceMode') === 'light') {
+                document.documentElement.classList.add('light-mode');
+            }
+        </script>
     </head>
-    <body>
+    <body style="display: none;">
         <header>
             <div class="logoAndProfile-section">
                 <section class="logo-section">
@@ -18,7 +23,7 @@
                 
                 <section class="header-right">
                     <div class="user-profile" id="userProfile">
-                        <img src="./images/user-image.jpg" alt="User Avatar" width="20px" height="20px">
+                        <img src="./images/user-image.png" alt="User Avatar" width="20px" height="20px">
                     </div>
                     <div class="profile-dropdown hidden" id="profileDropdown">
                         <p class="user-name" id="chosenUserName">Maverick</p>
@@ -145,6 +150,6 @@
             </div>
          </div>
 
-        <script src="./app.js"></script>
+        <script src="./scripts/app.js"></script>
     </body>
 </html>

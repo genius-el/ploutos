@@ -4,8 +4,8 @@
 let nameInStorage = localStorage.getItem('profileName');
 
 if (!nameInStorage) {
-    // Redirects the user to the get stsrted page only if user name does not exist. Else, the user remains on the dashboard page.
-    window.location.href = "getStarted.html";
+    // Redirects the user to the get started page only if user name does not exist. Else, the user remains on the dashboard page.
+    window.location.href = "../pages/getStarted.html";
 } else {
     // If user name exists, the dashboard page is displayed and the user can interact with the dashboard.
     document.body.style.display = "block";
