@@ -1,6 +1,20 @@
 'use strict';
 
+let nameInStorage = localStorage.getItem('profileName');
+
 // Select DOM elements
+let body = document.body;
+
+let welcomeMessage = document.getElementById('welcomeMessage');
+
+let logOutBtn = document.getElementById('logOutBtn');
+
+// Profile Dropdown
+let userProfile = document.getElementById('userProfile');
+let profileDropdown = document.getElementById('profileDropdown');
+let chosenUserName = document.getElementById('chosenUserName');
+
+// Other DOM elements
 const earningsBarFill = document.querySelector('.earnings-bar-fill');
 const expensesBarFill = document.querySelector('.expenses-bar-fill');
 const budgetBarFill = document.querySelector('.budget-bar-fill');
@@ -13,6 +27,22 @@ const expensesPercentageText = document.querySelector('.expenses-percentage');
 
 const budgetAmountText = document.querySelector('.budget-amount');
 const budgetPercentageText = document.querySelector('.budget-percentage');
+
+// Personalized Welcome Message 
+welcomeMessage.textContent = `Welcome, ${nameInStorage}`
+
+// Profile Dropdown functionality
+userProfile.addEventListener('click', function () {
+    profileDropdown.classList.remove('hidden');
+})
+
+body.addEventListener('click', function (event) {
+    if (!userProfile.contains(event.target) && !profileDropdown.contains(event.target)) {
+        profileDropdown.classList.add('hidden');
+    }
+})
+
+chosenUserName.textContent = nameInStorage ? nameInStorage : 'User'; // Default to 'User' if no name is found in localStorage
 
 // Retrieve and parse All Transactions from local storage
 const allTransactionsString = localStorage.getItem('allTransactions');
@@ -79,12 +109,28 @@ earningsBarFill.style.height = earningsPixel + 'px';
 expensesBarFill.style.height = expensesPixel + 'px';
 budgetBarFill.style.height = budgetPixel + 'px';
 
-earningsAmountText.textContent = `${totalEarnings.toFixed(2)}`;
+// Getting currency from local storage
+let currency = localStorage.getItem('currency');
+if (!currency) {
+    currency = '₦';
+}
+
+earningsAmountText.textContent = `${currency}` + `${totalEarnings.toFixed(2)}`;
 earningsPercentageText.textContent = `${earningsPercentage.toFixed()}%`;
 
-expensesAmountText.textContent = `${totalExpenses.toFixed(2)}`;
+expensesAmountText.textContent = `${currency}` + `${totalExpenses.toFixed(2)}`;
 expensesPercentageText.textContent = `${expensesPercentage.toFixed()}%`;
 
-budgetAmountText.textContent = `${budget.toFixed(2)}`;
+budgetAmountText.textContent = `${currency}` + `${budget.toFixed(2)}`;
 budgetPercentageText.textContent = `${budgetPercentage.toFixed()}%`;
 
+
+
+// LogOut functionality
+logOutBtn.addEventListener('click', function () {
+    // Clear the local storage
+    // localStorage.clear();
+
+    // Redirect to the get started page
+    window.location.href = '../pages/getStarted.html';
+})

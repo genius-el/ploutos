@@ -24,10 +24,10 @@ body {
     /* border: 1px solid var(--secondary-color); */
     /* box-shadow: 0 0 10px var(--secondary-color); */
     border-radius: 5px;
-    max-width: 900px;
+    
     height: 60vh;
     overflow-y: auto;
-    margin: 80px auto;
+    margin: 80px 90px;
     justify-content: center;
     align-items: center;
     background-color: var(--primary-color);
@@ -46,11 +46,13 @@ main {
     padding: 10px 12px 60px;
     display: grid;
     gap: var(--gap);
-    grid-template-columns: 1fr 1fr;
-    margin: 0 auto;
+    grid-template-columns: 1fr; /* single column on mobile*/
+    margin: 40px auto 90px;
     justify-content: center;
     margin-top: 150px;
 }
+
+
 
 .getStarted-introduction {
     display: flex;
@@ -72,6 +74,7 @@ main {
     gap: var(--gap);
     padding: 20px;
     border-radius: 5px;
+    width: 100%;
 }
 
 .form {
@@ -89,6 +92,7 @@ label {
 
 input {
     padding: 8px;
+    margin-top: 10px;
     border-radius: 5px;
     border: none;
     background-color: var(--input-bg-color);
@@ -111,12 +115,38 @@ button {
 }
 
 footer {
-    position: absolute;
+    /* position: absolute; */
     bottom: 0;
     left: 0;
     width: 100%;
     padding: 10px;
     /* background-color: rgb(30, 30, 30); */
     text-align: center;
+}
+
+
+/* MEDIA QUERIES */
+@media (min-width: 600px) {
+    html {
+        padding: 0;
+    }
+    body {
+        max-width: 900px;
+    }
+    main {
+        grid-template-columns: 1fr 1fr; /* two columns on desktop */
+        margin-top: 150px; 
+        gap: 40px;
+        padding: 0;
+    }
+
+    .getStarted-introduction {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .form-section {
+        width: 130%;
+    }
 }
 

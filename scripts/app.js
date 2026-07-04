@@ -14,6 +14,9 @@ if (!nameInStorage) {
 // Selecting DOM Elements
 
 let body = document.body;
+
+let logOutBtn = document.getElementById('logOutBtn');
+
 // Card References
 let earningsCard = document.getElementById('earningsCard');
 let expensesCard = document.getElementById('expensesCard');
@@ -73,7 +76,7 @@ let totalExpenseValue = 0;
 let recentBudgetAmount = 0;
 
 // Personalized Welcome Message
-welcomeMessage.textContent = `Welcome back, ${nameInStorage}!`;
+welcomeMessage.textContent = `Welcome, ${nameInStorage}!`;
 
 // Profile Name Update
 chosenUserName.textContent = nameInStorage;
@@ -131,7 +134,7 @@ let allTransactions = [];
 
 let transaction = {
     id: "",
-    date: "",
+    date: "", 
     description: "",
     amount: "",
     type: "",
@@ -143,6 +146,12 @@ let budgetTransaction = {
     id: "",
     date: "",
     amount: "",
+}
+
+// Get the current selected currency
+let currency = localStorage.getItem('currency');
+if (!currency) {
+    currency = '₦';
 }
 
 // DATA BUILDING BEGINS OR CONTINUES: Adding transactions to the transactions array and local storage
@@ -169,7 +178,7 @@ submitEarningBtn.addEventListener('click', function () {
     totalEarningValue += parseFloat(transaction.amount);
            
     // VISUAL UI DISPLAY: Displaying current total earning value
-    currentEarningValue.textContent = `$${totalEarningValue.toFixed(2)}`;
+    currentEarningValue.textContent = `${currency}${totalEarningValue.toFixed(2)}`;
 
     // VISUAL UI DISPLAY: Dynamically creating transaction rows from earning transaction
     createTransactionRow(transaction);
@@ -206,7 +215,7 @@ submitExpenseBtn.addEventListener('click', function () {
 
     // VISUAL UI DISPLAY: Displaying current total expense value
     // Displaying the current expense value on the card summary
-    currentExpenseValue.textContent = `$${totalExpenseValue.toFixed(2)}`;
+    currentExpenseValue.textContent = `${currency}${totalExpenseValue.toFixed(2)}`;
 
     // VISUAL UI DISPLAY: Dynamically creating transaction rows from expense transaction
     createTransactionRow(transaction);
@@ -242,7 +251,7 @@ submitBudgetBtn.addEventListener('click', function () {
     // Setting the budget value in local storage
     localStorage.setItem('budget', recentBudgetAmount);
 
-    currentBudgetValue.textContent = `$${recentBudgetAmount.toFixed(2)}`;
+    currentBudgetValue.textContent = `${currency}${recentBudgetAmount.toFixed(2)}`;
 
     // Clearing all entries
     budgetDate.value = "";
@@ -257,6 +266,8 @@ function saveToStorage () {
 }
 
 // ON PAGE LOAD, CHECK IF THERE ARE ANY TRANSACTIONS OR BUDGET IN LOCAL STORAGE AND DISPLAY THEM
+
+
 function loadTransactionsFromStorage () {
     // Check if transaction exists in storage
     let storedTransactions = localStorage.getItem('allTransactions');
@@ -274,10 +285,11 @@ function loadTransactionsFromStorage () {
         calculatingCurrentTransactionTotals();
 
         // Displaying current earning value on card summary
-        currentEarningValue.textContent = `$${totalEarningValue.toFixed(2)}`;
+        // localStorage.getItem('currency');
+        currentEarningValue.textContent = `${currency}${totalEarningValue.toFixed(2)}`; 
 
         // Displaying current expense value on card summary
-        currentExpenseValue.textContent = `$${totalExpenseValue.toFixed(2)}`;
+        currentExpenseValue.textContent = `${currency}${totalExpenseValue.toFixed(2)}`;
 
         // Trigger check for budget warning system on page load
         checkBudgetWarning();
@@ -292,7 +304,7 @@ function loadBudgetFromStorage () {
         // Where memory budget transaction becomes in tune with local storage
         recentBudgetAmount = budgetToUse;
 
-        currentBudgetValue.textContent = `$${budgetToUse.toFixed(2)}`;
+        currentBudgetValue.textContent = `${currency}${budgetToUse.toFixed(2)}`;
     }
 }
 
@@ -336,7 +348,7 @@ function createTransactionRow (transaction) {
 
         // Create the amount cell
         const amountCell = document.createElement('td');
-        amountCell.textContent = `$${transaction.amount}`;
+        amountCell.textContent = `${currency}${transaction.amount}`;
 
         // Create the description cell
         const descriptionCell = document.createElement('td');
@@ -388,9 +400,9 @@ tableBody.addEventListener('click', function (event) {
         calculatingCurrentTransactionTotals();
 
         // Update the card summary with the new totals
-        currentEarningValue.textContent = `$${totalEarningValue.toFixed(2)}`;
+        currentEarningValue.textContent = `${currency}` + `${totalEarningValue.toFixed(2)}`;
         
-        currentExpenseValue.textContent = `$${totalExpenseValue.toFixed(2)}`;
+        currentExpenseValue.textContent = `${currency}` + `${totalExpenseValue.toFixed(2)}`;
         // Re-rendering the transactions table
         renderTransactionsTable();
 
@@ -409,3 +421,12 @@ function renderTransactionsTable () {
         createTransactionRow(transaction)
     })
 }
+
+// LogOut functionality
+logOutBtn.addEventListener('click', function () {
+    // Clear the local storage
+    // localStorage.clear();
+
+    // Redirect to the get started page
+    window.location.href = '../pages/getStarted.html';
+})

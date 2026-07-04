@@ -292,6 +292,22 @@ tr {
     border-radius: 5px;
 }
 
+.search-row {
+    display: flex;
+    gap: var(--gap);
+    margin-top: var(--gap); 
+    color: var(--text-color);  
+    background: var(--light-tertiary-color);
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.search-row .delete-transaction-btn {
+    margin-left: auto;
+}
+
+
+
 /* Settings Page Styling */
 .settings-main {
     display: flex;
@@ -324,6 +340,13 @@ tr {
     padding: 10px;
     font-size: 14px;
     width: 100%;
+}
+
+#settingsMessage {
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: 10px;
+    color: var(--text-color);
 }
 
 /* Analytics Page Styling */
